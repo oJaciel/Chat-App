@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "561864362691",
+    "project_id": "app-chat-jaciel",
+    "storage_bucket": "app-chat-jaciel.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561864362691:android:492d1b4eed216c7514f076",
+        "android_client_info": {
+          "package_name": "br.com.jaciel.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjsZhdjyofUXmU3wDi-Y2yUjhu3peI9HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
