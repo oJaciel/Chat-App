@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:chat/core/models/chat_user.dart';
 import 'package:chat/core/services/auth/auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthFirebaseService implements AuthService {
@@ -37,8 +38,11 @@ class AuthFirebaseService implements AuthService {
 
     if (credential.user == null) return;
 
-    credential.user?.updateDisplayName(name);
-    //credential.user?.updatePhotoURL(photoURL);
+    //Atualizando atributos do usuário
+    await credential.user?.updateDisplayName(name);
+
+    //Salvando usuário no banco de dados (opcional)
+    await _saveChatUser(_toChatUser(credential.user!));
   }
 
   Future<void> login(String email, String password) async {
@@ -50,6 +54,17 @@ class AuthFirebaseService implements AuthService {
 
   Future<void> logout() async {
     FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> _saveChatUser(ChatUser user) async {
+    final store = FirebaseFirestore.instance;
+    final docRef = store.collection('users').doc(user.id);
+
+    await docRef.set({
+      'name': user.name,
+      'email': user.email,
+      'imageURL': user.imageURL,
+    });
   }
 
   static ChatUser _toChatUser(User user) {
