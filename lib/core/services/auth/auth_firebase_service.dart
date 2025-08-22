@@ -42,7 +42,8 @@ class AuthFirebaseService implements AuthService {
     await credential.user?.updateDisplayName(name);
 
     //Salvando usuário no banco de dados (opcional)
-    await _saveChatUser(_toChatUser(credential.user!));
+    _currentUser = _toChatUser(credential.user!, name);
+    await _saveChatUser(_currentUser!);
   }
 
   Future<void> login(String email, String password) async {
@@ -67,10 +68,10 @@ class AuthFirebaseService implements AuthService {
     });
   }
 
-  static ChatUser _toChatUser(User user) {
+  static ChatUser _toChatUser(User user, [String? name]) {
     return ChatUser(
       id: user.uid,
-      name: user.displayName ?? user.email!.split('@')[0],
+      name: name ?? user.displayName ?? user.email!.split('@')[0],
       email: user.email!,
       imageURL: user.photoURL ?? 'assets/images/avatar.png',
     );
